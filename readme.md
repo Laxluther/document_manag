@@ -1,13 +1,13 @@
 # Document Management & RAG-based Q&A API
 
-Welcome to our Document Management and RAG-based Question & Answering application! This tool helps you manage documents and get intelligent answers from your document library.
+Hello, and welcome to our Document Management and RAG-based Question & Answering application! This application assists you in document management and retrieving smart answers from your document repository.
 
 ## Features
 
-- **Document Upload**: Easily upload PDF documents into the system
-- **Smart Document Processing**: Your documents are automatically processed into chunks and indexed for efficient retrieval
-- **Powerful Q&A**: Ask questions in natural language and get answers based on your uploaded documents
-- **Document Selection**: Choose which documents to include in the knowledge base for answering questions
+- **Document Upload**: Simple upload of PDF documents into the system
+- **Smart Document Processing**: Your documents are processed into chunks automatically and indexed for retrieval efficiency
+- **Powerful Q&A**: Pose questions in natural language and receive answers on the basis of your uploaded documents
+- **Document Selection**: Select which documents to use in the knowledge base for answering questions
 
 ## Getting Started
 
@@ -37,7 +37,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-3. **Configure environment variables**
+3. **Set environment variables**
 
 Create a `.env` file in the root directory with the following variables:
 
@@ -63,13 +63,13 @@ topK=3
 simi_threshold=0.5
 ```
 
-4. **Start the application**
+4. **Run the application**
 
 ```bash
 uvicorn main:app --reload
 ```
 
-Your API will be running at http://localhost:8000. Visit http://localhost:8000/docs for the Swagger UI documentation.
+Your API will be available at http://localhost:8000. Access http://localhost:8000/docs for the Swagger UI documentation.
 
 ## How to Use the API
 
@@ -79,8 +79,9 @@ Upload your PDF files to make them available for querying.
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8000/documents/upload' \
-  -H 'accept: application/json' \
+  'http://localhost:8000/documents/upload'
+```
+-H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@your_document.pdf'
 ```
@@ -103,25 +104,25 @@ Choose which documents to include in the knowledge base for answering questions.
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8000/qa/documents' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "document_ids": [1, 2]
+'http://localhost:8000/qa/documents'
+ -H 'accept: application/json'
+ -H 'Content-Type: application/json'
+ -d '{  
+ "document_ids": [1, 2]  
 }'
 ```
 
 ### 4. Ask Questions
 
-Now you can ask questions about your documents!
+You can now ask questions regarding your documents!
 
 ```bash
-curl -X 'POST' \
-  'http://localhost:8000/qa/ask' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "question": "What are the key concepts in chapter 3?"
+curl -X 'POST' 
+  'http://localhost:8000/qa/ask' 
+  -H 'accept: application/json' 
+  -H 'Content-Type: application/json' 
+  -d '{  
+  "question": "What are the key concepts in chapter 3?"  
 }'
 ```
 
@@ -129,12 +130,11 @@ curl -X 'POST' \
 
 **Example 1: Upload a document**
 ```bash
-curl -X 'POST' \
-  'http://localhost:8000/documents/upload' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=@statistics_textbook.pdf'
-```
+curl -X 'POST' "\"}]
+`'http://localhost:8000/documents/upload' `
+-H 'accept: application/json'
+-H 'Content-Type: multipart/form-data'
+-F 'file=@statistics_textbook.pdf'
 
 Response:
 ```json
@@ -146,11 +146,11 @@ Response:
 
 **Example 2: Select documents for Q&A**
 ```bash
-curl -X 'POST' \
-  'http://localhost:8000/qa/documents' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
+curl -X 'POST'
+  'http://localhost:8000/qa/documents'
+  -H 'accept: application/json'
+  -H 'Content-Type: application/json'
+  -d '{  
   "document_ids": [1]
 }'
 ```
@@ -177,75 +177,86 @@ curl -X 'POST' \
 Response:
 ```json
 {
-  "question": "What is the Central Limit Theorem?",
-  "answer": "The Central Limit Theorem states that when you take a large enough sample from a population, the distribution of sample means will be approximately normally distributed, regardless of the original population's distribution. This is fundamental to statistical inference and allows us to make predictions about populations using sample data.\n\nSources:\n- Naked Statistics_ Stripping the Dread from the Data ( PDFDrive ).pdf (Similarity: 0.8721)",
+  "question": "What is the Central Limit Theorem?"
+```
+"answer": "The Central Limit Theorem tells us that if you take a sufficiently large sample from a population, the distribution of sample means will be nearly normally distributed, no matter what the original population's distribution is. This is the basis for statistical inference and enables us to make inferences about populations based on sample data.
+
+Sources:
+- Naked Statistics_ Stripping the Dread from the Data ( PDFDrive ).pdf (Similarity: 0.8721)",
   "processed_at": "2025-03-27T10:22:15.123456"
-}
 ```
 
 ## Advanced Configuration
 
-The application is highly configurable through environment variables:
+The application is extremely configurable using environment variables:
 
-- **Document Processing**: Adjust the `chunkSize` and `chunkOver` parameters to control how documents are split into chunks
-- **Embedding Model**: Change the `embeddingMod` to use a different embedding model
-- **LLM Model**: Modify `ollamaModel` to use a different language model
+- **Document Processing**: Modify the `chunkSize` and `chunkOver` parameters to decide how documents are divided into chunks
+- **Embedding Model**: Modify the `embeddingMod` to employ a different embedding model
+- **LLM Model**: Modify `ollamaModel` to employ a different language model
 
 ## Embedding Model and Retrieval Algorithm
 
 ### Embedding Model Choice
 
-This application uses the `sentence-transformers/all-MiniLM-L6-v2` model for generating embeddings. Here's why:
+This application employs the `sentence-transformers/all-MiniLM-L6-v2` model for producing embeddings. Here's why:
 
-- **Efficiency and Performance**: This model provides an excellent balance between speed and quality. It creates 384-dimensional embeddings that capture semantic meaning while being computationally efficient.
+- **Efficiency and Performance**: The model achieves a great balance between speed and quality. It produces 384-dimensional embeddings that are semantically meaningful and computationally efficient.
 
-- **Versatility**: The model performs well across various text types and domains, making it suitable for diverse document collections.
+- **Versatility**: The model is good at handling different types of text and domains and can be applied to different collections of documents.
 
-- **Size and Speed**: At only 80MB, this model runs quickly even on CPU, allowing for fast document processing without requiring specialized hardware.
+- **Size and Speed**: This model weighs only 80MB and can run fast even on CPU, enabling fast document processing without needing special hardware.
 
-- **Strong Benchmarks**: It consistently scores well on semantic similarity tasks which is crucial for retrieval performance.
+- **Robust Benchmarks**: It performs well on semantic similarity tasks consistently, which is very important for retrieval performance.
 
-You can change the embedding model by updating the `embeddingMod` environment variable if you have specific requirements for your use case.
+You can modify the embedding model by setting the `embeddingMod` environment variable if you have particular needs for your application.
 
 ### Retrieval Algorithm
 
-The system uses cosine similarity for retrieval, which offers several advantages:
+The system relies on cosine similarity for retrieval, which has several benefits:
 
-- **Semantic Understanding**: Instead of simple keyword matching, cosine similarity with embeddings captures the semantic meaning of text, enabling more intelligent retrieval.
+- **Semantic Understanding**: Rather than keyword matching, cosine similarity with embeddings understands the semantic content of text, making retrieval more intelligent.
 
-- **Normalization**: Cosine similarity normalizes for document length, ensuring that chunk size doesn't unduly influence retrieval results.
+- **Normalization**: Cosine similarity normalizes document length, so chunk size does not unfairly skew retrieval outcomes.
 
-- **Performance**: The implementation is computationally efficient, allowing for quick retrieval from large document collections.
+- **Performance**: The implementation is efficient computationally, so retrieval is fast from large collections of documents.
 
-- **Fine-tuning Control**: The `simi_threshold` parameter (default: 0.5) lets you adjust the minimum similarity score for retrieval, while `topK` (default: 3) controls how many document chunks are retrieved for each query.
+- **Tuning Control**: The `simi_threshold` parameter (default: 0.5) allows you to set the minimum similarity score for retrieval, and `topK` (default: 3) determines the number of document chunks to retrieve per query.
 
-The retrieval process works as follows:
+The retrieval process is as follows:
 
-1. The user's question is converted into an embedding vector
-2. This vector is compared against all document chunk embeddings using cosine similarity
-3. The system retrieves the top K chunks with highest similarity scores
-4. These chunks are used as context for the LLM to generate an answer
-5. The response includes source information and similarity scores for transparency
+1. The user's question is embedded into a vector
+2. This vector is matched with all document chunk embeddings based on cosine similarity
+3. The system returns top K chunks with highest similarity scores
+4. Chunks are utilized as context for the LLM to produce a response
+5. The answer contains source information and similarity scores for transparency
 
 ## Troubleshooting
 
 **Database connection issues**
-- Ensure PostgreSQL is running and accessible
-- Verify your database credentials in the .env file
+- Make sure PostgreSQL is running and accessible
+- Double-check your database credentials in the.env file
 
-**Document upload problems**
-- Currently only PDF files are supported
-- Check that your PDF is not corrupted or password protected
+**Document upload issues**
+- Only PDF files are supported at the moment
+- Make sure your PDF is not corrupted or password-protected
 
 **LLM-related issues**
-- Make sure Ollama is running locally or update the URL if using a remote instance
-- Verify that the specified model is available in your Ollama installation
+- Ensure Ollama is running locally or update the URL if a remote instance is being used
+- Ensure that the model mentioned is present in your Ollama installation
 
 ## Architecture
 
-This application follows a clean architecture:
+The application is organized with clean architecture:
 
 - **API Layer**: FastAPI routes in `api/` directory
 - **Service Layer**: Business logic in `service/` directory
 - **Database Layer**: Database operations in `database/` directory
 - **Configuration**: Central configuration in `config.py`
+
+## Contributing
+
+Feel free to make any contributions. A Pull Request would be most appreciated.
+
+## License
+
+Project licensed under the MIT License - see the LICENSE file for details.
