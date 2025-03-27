@@ -1,6 +1,6 @@
 # Document Management & RAG-based Q&A API
 
-Welcome to our Document Management and RAG-based Question & Answering application! This tool helps you manage documents and get intelligent answers from your document library.
+Welcome to Document Management and RAG-based Question & Answering application! This tool helps you manage documents and get intelligent answers from your document library.
 
 ## Features
 
