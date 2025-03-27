@@ -79,9 +79,8 @@ Upload your PDF files to make them available for querying.
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8000/documents/upload'
-```
--H 'accept: application/json' \
+  'http://localhost:8000/documents/upload' \
+  -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@your_document.pdf'
 ```
@@ -104,11 +103,11 @@ Choose which documents to include in the knowledge base for answering questions.
 
 ```bash
 curl -X 'POST' \
-'http://localhost:8000/qa/documents'
- -H 'accept: application/json'
- -H 'Content-Type: application/json'
- -d '{  
- "document_ids": [1, 2]  
+  'http://localhost:8000/qa/documents' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{  
+  "document_ids": [1, 2]  
 }'
 ```
 
@@ -117,10 +116,10 @@ curl -X 'POST' \
 You can now ask questions regarding your documents!
 
 ```bash
-curl -X 'POST' 
-  'http://localhost:8000/qa/ask' 
-  -H 'accept: application/json' 
-  -H 'Content-Type: application/json' 
+curl -X 'POST' \
+  'http://localhost:8000/qa/ask' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
   -d '{  
   "question": "What are the key concepts in chapter 3?"  
 }'
@@ -130,11 +129,12 @@ curl -X 'POST'
 
 **Example 1: Upload a document**
 ```bash
-curl -X 'POST' "\"}]
-`'http://localhost:8000/documents/upload' `
--H 'accept: application/json'
--H 'Content-Type: multipart/form-data'
--F 'file=@statistics_textbook.pdf'
+curl -X 'POST' \
+  'http://localhost:8000/documents/upload' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=@statistics_textbook.pdf'
+```
 
 Response:
 ```json
@@ -146,10 +146,10 @@ Response:
 
 **Example 2: Select documents for Q&A**
 ```bash
-curl -X 'POST'
-  'http://localhost:8000/qa/documents'
-  -H 'accept: application/json'
-  -H 'Content-Type: application/json'
+curl -X 'POST' \
+  'http://localhost:8000/qa/documents' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
   -d '{  
   "document_ids": [1]
 }'
@@ -177,13 +177,10 @@ curl -X 'POST' \
 Response:
 ```json
 {
-  "question": "What is the Central Limit Theorem?"
-```
-"answer": "The Central Limit Theorem tells us that if you take a sufficiently large sample from a population, the distribution of sample means will be nearly normally distributed, no matter what the original population's distribution is. This is the basis for statistical inference and enables us to make inferences about populations based on sample data.
-
-Sources:
-- Naked Statistics_ Stripping the Dread from the Data ( PDFDrive ).pdf (Similarity: 0.8721)",
+  "question": "What is the Central Limit Theorem?",
+  "answer": "The Central Limit Theorem tells us that if you take a sufficiently large sample from a population, the distribution of sample means will be nearly normally distributed, no matter what the original population's distribution is. This is the basis for statistical inference and enables us to make inferences about populations based on sample data.\n\nSources:\n- Naked Statistics_ Stripping the Dread from the Data ( PDFDrive ).pdf (Similarity: 0.8721)",
   "processed_at": "2025-03-27T10:22:15.123456"
+}
 ```
 
 ## Advanced Configuration
@@ -234,7 +231,7 @@ The retrieval process is as follows:
 
 **Database connection issues**
 - Make sure PostgreSQL is running and accessible
-- Double-check your database credentials in the.env file
+- Double-check your database credentials in the .env file
 
 **Document upload issues**
 - Only PDF files are supported at the moment
