@@ -1,6 +1,6 @@
 # Document Management & RAG-based Q&A API
 
-Welcome to Document Management and RAG-based Question & Answering application! This tool helps you manage documents and get intelligent answers from your document library.
+Welcome to our Document Management and RAG-based Question & Answering application! This tool helps you manage documents and get intelligent answers from your document library.
 
 ## Features
 
@@ -191,6 +191,42 @@ The application is highly configurable through environment variables:
 - **Embedding Model**: Change the `embeddingMod` to use a different embedding model
 - **LLM Model**: Modify `ollamaModel` to use a different language model
 
+## Embedding Model and Retrieval Algorithm
+
+### Embedding Model Choice
+
+This application uses the `sentence-transformers/all-MiniLM-L6-v2` model for generating embeddings. Here's why:
+
+- **Efficiency and Performance**: This model provides an excellent balance between speed and quality. It creates 384-dimensional embeddings that capture semantic meaning while being computationally efficient.
+
+- **Versatility**: The model performs well across various text types and domains, making it suitable for diverse document collections.
+
+- **Size and Speed**: At only 80MB, this model runs quickly even on CPU, allowing for fast document processing without requiring specialized hardware.
+
+- **Strong Benchmarks**: It consistently scores well on semantic similarity tasks which is crucial for retrieval performance.
+
+You can change the embedding model by updating the `embeddingMod` environment variable if you have specific requirements for your use case.
+
+### Retrieval Algorithm
+
+The system uses cosine similarity for retrieval, which offers several advantages:
+
+- **Semantic Understanding**: Instead of simple keyword matching, cosine similarity with embeddings captures the semantic meaning of text, enabling more intelligent retrieval.
+
+- **Normalization**: Cosine similarity normalizes for document length, ensuring that chunk size doesn't unduly influence retrieval results.
+
+- **Performance**: The implementation is computationally efficient, allowing for quick retrieval from large document collections.
+
+- **Fine-tuning Control**: The `simi_threshold` parameter (default: 0.5) lets you adjust the minimum similarity score for retrieval, while `topK` (default: 3) controls how many document chunks are retrieved for each query.
+
+The retrieval process works as follows:
+
+1. The user's question is converted into an embedding vector
+2. This vector is compared against all document chunk embeddings using cosine similarity
+3. The system retrieves the top K chunks with highest similarity scores
+4. These chunks are used as context for the LLM to generate an answer
+5. The response includes source information and similarity scores for transparency
+
 ## Troubleshooting
 
 **Database connection issues**
@@ -213,4 +249,3 @@ This application follows a clean architecture:
 - **Service Layer**: Business logic in `service/` directory
 - **Database Layer**: Database operations in `database/` directory
 - **Configuration**: Central configuration in `config.py`
-
