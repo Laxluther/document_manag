@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+psycopg
+psycopg_pool
+pypdf
+python-docx
+sentence-transformers
+python-dotenv
+loguru
+asyncpg
+aiohttp
+sentence-transformers
+langchain
+langchain-community
+langchain-text-splitters
